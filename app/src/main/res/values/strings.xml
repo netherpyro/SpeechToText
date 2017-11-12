@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Recognizer Sample</string>
+    <string name="results_hint">Results</string>
+    <string name="voice_volume_hint">Voice volume</string>
+    <string name="model_mail_description">This model was trained for the following commands:\n— будильник на 7 утра\n— открыть почту\n— купить билет</string>
+    <string name="current_lang_hint_label">Lang: </string>
+    <string name="current_recognition_hint_label">Rec status: </string>
+    <string name="current_spotter_hint_label">Spotter status: </string>
+    <string name="start_btn">Start</string>
+    <string name="stop_btn">Stop</string>
+    <string name="cancel_btn">Cancel</string>
+</resources>
