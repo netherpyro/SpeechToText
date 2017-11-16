@@ -18,6 +18,6 @@ android {
 }
 
 dependencies {
-    compile "com.yandex.android:speechkit:2.5.0"
+    compile 'com.yandex.android:speechkit:2.5.0'
     compileOnly 'com.google.android.things:androidthings:+'
 }

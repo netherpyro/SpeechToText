@@ -2,6 +2,7 @@ package com.issart.speechtotext;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -36,6 +37,7 @@ import ru.yandex.speechkit.SpeechKit;
  * @see <a href="https://github.com/androidthings/contrib-drivers#readme">https://github.com/androidthings/contrib-drivers#readme</a>
  */
 public class MainActivity extends Activity implements RecognizerListener, PhraseSpotterListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String API_KEY_FOR_TESTS_ONLY = "88f01949-8470-467f-acef-d10aa292a1ed";
     private static final String API_KEY = "88f01949-8470-467f-acef-d10aa292a1ed";
 
@@ -53,6 +55,7 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate()");
         setContentView(R.layout.activity_main);
 
         SpeechKit.getInstance().configure(this, API_KEY_FOR_TESTS_ONLY);
@@ -99,6 +102,7 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
     @Override
     public void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart()");
         // Don't forget to call start.
         startPhraseSpotter();
     }
@@ -106,6 +110,7 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
     @Override
     public void onStop() {
         super.onStop();
+        Log.d(TAG, "onStop()");
         Error stopResult = PhraseSpotter.stop();
         handleError(stopResult);
         resetRecognizer();
@@ -123,21 +128,25 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
 
     @Override
     public void onRecordingBegin(Recognizer recognizer) {
+        Log.d(TAG, "onRecordingBegin()");
         updateRecognitionStatus("Recording begin");
     }
 
     @Override
     public void onSpeechDetected(Recognizer recognizer) {
+        Log.d(TAG, "onSpeechDetected()");
         updateRecognitionStatus("Speech detected");
     }
 
     @Override
     public void onSpeechEnds(Recognizer recognizer) {
+        Log.d(TAG, "onSpeechEnds()");
         updateRecognitionStatus("Speech ends");
     }
 
     @Override
     public void onRecordingDone(Recognizer recognizer) {
+        Log.d(TAG, "onRecordingDone()");
         updateRecognitionStatus("Recording done");
         startBtn.setEnabled(true);
         cancelBtn.setEnabled(false);
@@ -159,6 +168,7 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
 
     @Override
     public void onRecognitionDone(Recognizer recognizer, Recognition recognition) {
+        Log.d(TAG, "onRecognitionDone()");
         updateRecognitionResult(recognition.getBestResultText());
         updateProgress(0);
     }
@@ -166,9 +176,11 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
     @Override
     public void onError(Recognizer recognizer, ru.yandex.speechkit.Error error) {
         if (error.getCode() == Error.ERROR_CANCELED) {
+            Log.d(TAG, "onError():: cancelled");
             updateRecognitionStatus("Cancelled");
             updateProgress(0);
         } else {
+            Log.d(TAG, "onError()::" + error.getString());
             updateRecognitionStatus("Error occurred " + error.getString());
             resetRecognizer();
         }
@@ -200,6 +212,7 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
 
     //region SPOTTER
     private void startPhraseSpotter() {
+        Log.d(TAG, "startPhraseSpotter()");
         Error startResult = PhraseSpotter.start();
         handleError(startResult);
     }
@@ -231,6 +244,7 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
 
     @Override
     public void onPhraseSpotted(String s, int i) {
+        Log.d(TAG, "onPhraseSpotted()::the phrase is " + s);
         if (i == 6 || i == 8) {
             switchLanguage(i);
         } else if (i == 7) {
@@ -240,16 +254,19 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
 
     @Override
     public void onPhraseSpotterStarted() {
+        Log.d(TAG, "onPhraseSpotterStarted()");
         updateSpotterStatus("Started");
     }
 
     @Override
     public void onPhraseSpotterStopped() {
+        Log.d(TAG, "onPhraseSpotterStopped()");
         updateSpotterStatus("Stopped");
     }
 
     @Override
     public void onPhraseSpotterError(Error error) {
+        Log.d(TAG, "onPhraseSpotterError()");
         handleError(error);
     }
 
