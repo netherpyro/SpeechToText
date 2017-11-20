@@ -38,8 +38,7 @@ import ru.yandex.speechkit.SpeechKit;
  */
 public class MainActivity extends Activity implements RecognizerListener, PhraseSpotterListener {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String API_KEY_FOR_TESTS_ONLY = "88f01949-8470-467f-acef-d10aa292a1ed";
-    private static final String API_KEY = "88f01949-8470-467f-acef-d10aa292a1ed";
+    private static final String API_KEY_FOR_TESTS_ONLY = "069b6659-984b-4c5f-880e-aaedcfd84102";
 
     private ProgressBar progressBar;
     private TextView recognitionStatus;
@@ -199,6 +198,7 @@ public class MainActivity extends Activity implements RecognizerListener, Phrase
     }
 
     private void updateRecognitionResult(String text) {
+        Log.d(TAG, "updateRecognitionResult()::" + text);
         recognitionResult.setText(text);
     }
 
